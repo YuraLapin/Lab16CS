@@ -410,17 +410,17 @@
         private GroupBox fileButtonsGroupBox;
         private Button alterButton;
         private Button deleteButton;
-        private TextBox collectionTextBox;
+        public TextBox collectionTextBox;
         private GroupBox filterGroupBox;
-        private TextBox powerFilterTextBox;
-        private TextBox nameFilterTextBox;
-        private RadioButton nothingFilterRadioButton;
-        private RadioButton powerFilterRadioButton;
-        private RadioButton nameFilterRadioButton;
+        public TextBox powerFilterTextBox;
+        public TextBox nameFilterTextBox;
+        public RadioButton nothingFilterRadioButton;
+        public RadioButton powerFilterRadioButton;
+        public RadioButton nameFilterRadioButton;
         private GroupBox sortingGroupBox;
-        private RadioButton nothingSortingRadioButton;
-        private RadioButton powerSortingRadioButton;
-        private RadioButton nameSortingRadioButton;
+        public RadioButton nothingSortingRadioButton;
+        public RadioButton powerSortingRadioButton;
+        public RadioButton nameSortingRadioButton;
         private Button FilteringApplyButton;
     }
 }

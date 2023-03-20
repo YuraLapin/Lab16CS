@@ -1,34 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab16Main
+﻿namespace Lab16Main
 {
+    [Serializable]
+    [JsonDerivedType(typeof(Transport), typeDiscriminator: "transport")]
+    [JsonDerivedType(typeof(Train), typeDiscriminator: "train")]
+    [JsonDerivedType(typeof(Express), typeDiscriminator: "express")]
     public class Transport: ICloneable<Transport>
     {
-        public string name;
-        public int power;
+        public string Name { get; set; }
+        public int Power { get; set; }
 
         public Transport()
         {
-            name = "";
-            power = 0;
+            Name = "";
+            Power = 0;
         }
 
-        public Transport(string _name, int _power)
+        public Transport(string name, int power)
         {
-            name = _name;
-            power = _power;
+            Name = name;
+            Power = power;
         }
 
-        public Transport(Transport transport)
+        public Transport(Transport anotherTransport)
         {
-            name = transport.name;
-            power = transport.power;
+            Name = anotherTransport.Name;
+            Power = anotherTransport.Power;
         }
 
         public virtual void RandomInit()
@@ -40,15 +36,15 @@ namespace Lab16Main
             {
                 sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
             }
-            name = sb.ToString();
+            Name = sb.ToString();
 
             int maxPower = 1000;
-            power = Program.rand.Next(maxPower);
+            Power = Program.rand.Next(maxPower);
         }
 
         public override string ToString()
         {
-            return GetType() + " name - " + name.ToString() + " power - " + power.ToString();
+            return GetType() + " name - " + Name.ToString() + " power - " + Power.ToString();
         }        
 
         public void Print()
@@ -64,7 +60,7 @@ namespace Lab16Main
             }
             if (obj is Transport transport)
             {
-                return Equals(this.name, transport.name) && Equals(this.power, transport.power);
+                return Equals(this.Name, transport.Name) && Equals(this.Power, transport.Power);
             }
             return false;
         }       

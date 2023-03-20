@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab16Main
+﻿namespace Lab16Main
 {
+    [Serializable]
     public class Train : Transport
     {
-        public int cars;
+        public int Cars { get; set; }
 
         public Train() : base()
         {
-            cars = 0;
+            Cars = 0;
         }
 
-        public Train(string _name, int _maxSpeed, int _cars) : base(_name, _maxSpeed)
+        public Train(string name, int power, int cars) : base(name, power)
         {
-            cars = _cars;
+            Cars = cars;
         }
 
-        public Train(Train train): base (train)
+        public Train(Train anotherTrain): base (anotherTrain)
         {
-            cars = train.cars;
+            Cars = anotherTrain.Cars;
         }
 
         public override void RandomInit()
@@ -34,18 +29,18 @@ namespace Lab16Main
             {
                 sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
             }
-            name = sb.ToString();
+            Name = sb.ToString();
 
             int maxPower = 1000;
-            power = Program.rand.Next(maxPower);
+            Power = Program.rand.Next(maxPower);
 
             int maxCars = 9;
-            cars = Program.rand.Next(maxCars);
+            Cars = Program.rand.Next(maxCars);
         }
 
         public override string ToString()
         {
-            return GetType() + " name - " + name.ToString() + " power - " + power.ToString() + ", cars - " + cars.ToString();
+            return GetType() + " name - " + Name.ToString() + " power - " + Power.ToString() + ", cars - " + Cars.ToString();
         }
 
         //public override bool Equals(object? obj)

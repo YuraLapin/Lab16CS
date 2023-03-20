@@ -1,62 +1,30 @@
-using System.Linq;
-using System.Text;
-
 namespace Lab16Main
 {
     public partial class MainForm : Form
     {
+        public MainFormUpdater Updater;
+        public MainFormSaver<Transport> Saver;
+        public MainFormLoader<Transport> Loader;
+
         public MainForm()
         {
+            Updater = new MainFormUpdater();
+            Saver = new MainFormSaver<Transport>();
+            Loader = new MainFormLoader<Transport>();
             InitializeComponent();
-        }
-
-        public void UpdateTextBox()
-        {
-            IEnumerable<Transport> ans;
-
-            if (nameFilterRadioButton.Checked)
-            {
-                ans = from element in Program.list where element.name == nameFilterTextBox.Text select element;
-            }
-            else if (powerFilterRadioButton.Checked)
-            {
-                if (powerFilterTextBox.Text != "" && UserInteractor.IsInt(powerFilterTextBox.Text) && powerFilterTextBox.Text.Count() <= 10)
-                {
-                    ans = from element in Program.list where element.power == int.Parse(powerFilterTextBox.Text) select element;
-                }
-                else
-                {
-                    ans = new List<Transport>();
-                }
-            }
-            else
-            {
-                ans = from element in Program.list select element;
-            }
-
-            if (nameSortingRadioButton.Checked)
-            {
-                ans = ans.OrderBy(element => element.name);
-            }
-            else if (powerSortingRadioButton.Checked)
-            {
-                ans = ans.OrderBy(element => element.power);
-            }
-
-            collectionTextBox.Text = Extensions.ToString(ans);
-        }
+        }        
 
         public void UpdateTextBox(Transport transport)
         {
             Program.list.Add(transport);
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void newTransportButton_Click(object sender, EventArgs e)
         {
             var dialogueWindow = new TransportAddForm();
             dialogueWindow.ShowDialog();
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void randomTransportButton_Click(object sender, EventArgs e)
@@ -70,7 +38,7 @@ namespace Lab16Main
         {
             var dialogueWindow = new TrainAddForm();
             dialogueWindow.ShowDialog();
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void randomTrainButton_Click(object sender, EventArgs e)
@@ -84,7 +52,7 @@ namespace Lab16Main
         {
             var dialogueWindow = new ExpressAddForm();
             dialogueWindow.ShowDialog();
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void randomExpressButton_Click(object sender, EventArgs e)
@@ -98,42 +66,42 @@ namespace Lab16Main
         {
             var dialogueWindow = new DeleteForm();
             dialogueWindow.ShowDialog();
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void binarySaveButton_Click(object sender, EventArgs e)
-        {
-
+        {            
+            Saver.Save(Program.list, new BinaryPrinter<Transport>(), "bin files (*.bin)|*.bin");
         }
 
         private void binaryLoadButton_Click(object sender, EventArgs e)
         {
-
+            Loader.Load(this, Program.list, new BinaryReader<Transport>(), "bin files (*.bin)|*.bin");
         }
 
         private void jsonSaveButton_Click(object sender, EventArgs e)
         {
-
+            Saver.Save(Program.list, new JSONPrinter<Transport>(), "json files (*.json)|*.json");
         }
 
         private void jsonLoadButton_Click(object sender, EventArgs e)
         {
-
+            Loader.Load(this, Program.list, new JSONReader<Transport>(), "json files (*.json)|*.json");
         }
 
         private void xmlSaveButton_Click(object sender, EventArgs e)
         {
-
+            Saver.Save(Program.list, new XMLPrinter<Transport>(), "xml files (*.xml)|*.xml");
         }
 
         private void xmlLoadButton_Click(object sender, EventArgs e)
         {
-
+            Loader.Load(this, Program.list, new XMLReader<Transport>(), "xml files (*.xml)|*.xml");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void nameFilterRadioButton_Click(object sender, EventArgs e)
@@ -169,33 +137,33 @@ namespace Lab16Main
         {
             powerSortingRadioButton.Checked = false;
             nothingSortingRadioButton.Checked = false;
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void powerSortingRadioButton_Click(object sender, EventArgs e)
         {
             nameSortingRadioButton.Checked = false;
             nothingSortingRadioButton.Checked = false;
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void nothingSortingRadioButton_Click(object sender, EventArgs e)
         {
             nameSortingRadioButton.Checked = false;
             powerSortingRadioButton.Checked = false;
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void FilteringApplyButton_Click(object sender, EventArgs e)
         {
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
 
         private void alterButton_Click(object sender, EventArgs e)
         {
             var dialogueWindow = new AlterForm();
             dialogueWindow.ShowDialog();
-            UpdateTextBox();
+            Updater.UpdateCollectionTextBox(this);
         }
     }
 }

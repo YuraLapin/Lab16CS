@@ -1,16 +1,6 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab16Main
+﻿namespace Lab16Main
 {
+    [Serializable]
     public class Node<T>
     {
         public Node<T>? Prev;
@@ -25,9 +15,11 @@ namespace Lab16Main
         }
     }
 
+    [Serializable]
     public class CycledList<T> : IEnumerable<T>, ICollection<T> where T : ICloneable<T>, new()
     {
         public Node<T>? Start = null;
+
         public int Count
         {
             get;
@@ -107,7 +99,17 @@ namespace Lab16Main
             {
                 Add(element.Clone());
             }
-            IsReadOnly = IsReadOnly;
+            IsReadOnly = anotherList.IsReadOnly;
+        }
+
+        public void SetTo(CycledList<T> anotherList)
+        {
+            Clear();
+            foreach (T element in anotherList)
+            {
+                Add(element.Clone());
+            }
+            IsReadOnly = anotherList.IsReadOnly;
         }
 
         public virtual void Add(T? element)
@@ -173,10 +175,15 @@ namespace Lab16Main
             return sb.ToString();
         }
 
-        public void Print()
+        public void PrintTo(IPrinter<T> printer, Stream stream)
         {
-            Console.WriteLine(ToString());
-        }
+            printer.Print(this, stream);
+        }        
+
+        public void ReadFrom(IReader<T> reader, Stream stream)
+        {
+            SetTo(reader.Read(this, stream));
+        }        
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -283,7 +290,7 @@ namespace Lab16Main
             return true;
         }        
 
-        public void Copy(ref CycledList<T> list)
+        public void Clone(ref CycledList<T> list)
         {
             list = new CycledList<T>(this);
         }

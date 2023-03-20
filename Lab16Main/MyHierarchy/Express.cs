@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab16Main
+﻿namespace Lab16Main
 {
+    [Serializable]
     public class Express: Train
     {
-        public List<string> stationsToSkip;
+        public List<string> StationsToSkip { get; set; }
 
         public Express(): base()
         {
-            stationsToSkip = new List<string>();
+            StationsToSkip = new List<string>();
         }
 
-        public Express(string _name, int _maxSpeed, int _cars, List<string> _stationsToSkip): base(_name, _maxSpeed, _cars)
+        public Express(string name, int power, int cars, List<string> stationsToSkip): base(name, power, cars)
         {
-            stationsToSkip = _stationsToSkip;
+            StationsToSkip = stationsToSkip;
         } 
         
-        public Express(Express express): base(express)
+        public Express(Express anotherExpress): base(anotherExpress)
         {
-            stationsToSkip = new List<string>(express.stationsToSkip);
+            StationsToSkip = new List<string>(anotherExpress.StationsToSkip);
         }
 
         public override void RandomInit()
@@ -34,28 +29,28 @@ namespace Lab16Main
             {
                 sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
             }
-            name = sb.ToString();
+            Name = sb.ToString();
 
             int maxPower = 1000;
-            power = Program.rand.Next(maxPower);
+            Power = Program.rand.Next(maxPower);
 
             int maxCars = 9;
-            cars = Program.rand.Next(maxCars);
+            Cars = Program.rand.Next(maxCars);
 
             int maxStations = 5;
             for (int i = 0; i < Program.rand.Next(maxStations); ++i)
             {
-                stationsToSkip.Add("station" + i);
+                StationsToSkip.Add("station" + i);
             }
         }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append(GetType() + " name - " + name.ToString() + ": power - " + power.ToString() + ", cars - " + cars.ToString() + ", list of stations to skip: [ ");
-            if (stationsToSkip.Count > 0)
+            sb.Append(GetType() + " name - " + Name.ToString() + ": power - " + Power.ToString() + ", cars - " + Cars.ToString() + ", list of stations to skip: [ ");
+            if (StationsToSkip.Count > 0)
             {
-                foreach (string s in stationsToSkip)
+                foreach (string s in StationsToSkip)
                 {
                     sb.Append(s + ", ");
                 }
