@@ -81,22 +81,22 @@ namespace Lab16Main
 
         private void jsonSaveButton_Click(object sender, EventArgs e)
         {
-            Saver.Save(Program.list, new JSONPrinter<Transport>(), "json files (*.json)|*.json");
+            Saver.Save(Program.list, new JsonPrinter<Transport>(), "json files (*.json)|*.json");
         }
 
         private void jsonLoadButton_Click(object sender, EventArgs e)
         {
-            Loader.Load(this, Program.list, new JSONReader<Transport>(), "json files (*.json)|*.json");
+            Loader.Load(this, Program.list, new JsonReader<Transport>(), "json files (*.json)|*.json");
         }
 
         private void xmlSaveButton_Click(object sender, EventArgs e)
         {
-            Saver.Save(Program.list, new XMLPrinter<Transport>(), "xml files (*.xml)|*.xml");
+            Saver.Save(Program.list, new XmlPrinter<Transport>(), "xml files (*.xml)|*.xml");
         }
 
         private void xmlLoadButton_Click(object sender, EventArgs e)
         {
-            Loader.Load(this, Program.list, new XMLReader<Transport>(), "xml files (*.xml)|*.xml");
+            Loader.Load(this, Program.list, new XmlReader<Transport>(), "xml files (*.xml)|*.xml");
         }
 
         private void MainForm_Load(object sender, EventArgs e)

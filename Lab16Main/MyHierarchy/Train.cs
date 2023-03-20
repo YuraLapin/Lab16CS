@@ -1,6 +1,7 @@
 ﻿namespace Lab16Main
 {
     [Serializable]
+    [XmlInclude(typeof(Express))]
     public class Train : Transport
     {
         public int Cars { get; set; }

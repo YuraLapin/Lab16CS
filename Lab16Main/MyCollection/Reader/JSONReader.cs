@@ -1,6 +1,6 @@
 ﻿namespace Lab16Main
 {
-    public class JSONReader<T> : IReader<T> where T : ICloneable<T>, new()
+    public class JsonReader<T> : IReader<T> where T : ICloneable<T>, new()
     {
         public CycledList<T> Read(CycledList<T> list, Stream stream)
         {

@@ -4,6 +4,7 @@
     [JsonDerivedType(typeof(Transport), typeDiscriminator: "transport")]
     [JsonDerivedType(typeof(Train), typeDiscriminator: "train")]
     [JsonDerivedType(typeof(Express), typeDiscriminator: "express")]
+    [XmlInclude(typeof(Train))]
     public class Transport: ICloneable<Transport>
     {
         public string Name { get; set; }
